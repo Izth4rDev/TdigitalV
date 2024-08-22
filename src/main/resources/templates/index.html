@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <th:block th:insert="/components/head ::head"></th:block>
+<body>
+    <th:block th:insert="/components/nav :: nav"></th:block>
+
+    <form th:action="@{/search}" class="d-flex my-5 align-items-center justify-content-around" method="get">
+        <label for="sucursal" class="form-label mx-3">Sucursal</label>
+            <select name="sucursal" id="sucursal" class="form-select">
+                <option value="0">Todos</option>
+                <option th:each="sucursal : ${sucursales}" th:value="${sucursal.id}" th:text="${sucursal.sucursalNombre}"></option>
+            </select>
+
+            <label for="tipoAtencion" class="form-label mx-3">Tipo de atencion</label>
+            <select name="tipoAtencion" id="tipoAtencion" class="form-select">
+                <option value="0">Todos</option>
+                <option th:each="tipoAtencion : ${tipoAtenciones}" th:value="${tipoAtencion.id}" th:text="${tipoAtencion.tipoAtencionDescripcion}"></option>
+            </select>
+
+        <button class="btn btn-primary" type="submit">Enviar</button>
+    </form>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Sucursal</th>
+            <th scope="col">Atencion</th>
+            <th scope="col">Mascota</th>
+            <th scope="col">Nombre dueño</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Box</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr th:each="atencion : ${atenciones}">
+            <td th:text="${atencion.sucursal.sucursalNombre}"></td>
+            <td th:text="${atencion.tipoAtencion.tipoAtencionDescripcion}"></td>
+            <td th:text="${atencion.mascota.mascotaNombre}"></td>
+            <td th:text="${atencion.mascota.getDueno().duenoNombre}"></td>
+            <td th:text="${atencion.fechaRealizacion}"></td>
+            <td th:text="${atencion.boxAtencion}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <th:block th:insert="/components/footer :: footer"></th:block>
+    <script th:replace="/components/js :: script"></script>
+
+</body>
+</html>
